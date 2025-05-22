@@ -29,8 +29,8 @@ const App = () => {
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm])
 
   const fetchMovies = async (query = '') => {
-    // setIsLoading(true);
-    // setErrorMessage('');
+    setIsLoading(true);
+    setErrorMessage('');
     try {
       const endpoint = query ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}` : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
       const response = await fetch(endpoint, API_OPTIONS);
@@ -73,12 +73,12 @@ const App = () => {
   }
 
   useEffect(() => {
-    loadTrendingMovies(), []
-  })
+    loadTrendingMovies()
+  }, []);
 
   useEffect(() => {
-    fetchMovies(debouncedSearchTerm), [debouncedSearchTerm];
-  })
+    fetchMovies(debouncedSearchTerm);
+  }, [debouncedSearchTerm]);
 
   return (
     <main>
